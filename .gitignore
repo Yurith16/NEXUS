@@ -1,56 +1,6 @@
 #Archivos temporales
 src/tmp/
 
-# .gitignore
-
-# Archivos de imagen
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.bmp
-*.tiff
-*.webp
-
-# Archivos de audio
-*.mp3
-*.wav
-*.ogg
-*.flac
-*.aac
-
-# Archivos de video
-*.mp4
-*.avi
-*.mov
-*.mkv
-
-# Documentos
-*.pdf
-*.doc
-*.docx
-*.ppt
-*.pptx
-
-# Archivos comprimidos
-*.zip
-*.rar
-*.7z
-
-# Logs y temporales
-*.log
-*.tmp
-*.temp
-
-# Entornos virtuales
-venv/
-env/
-*.env
-
-# Sistema
-.DS_Store
-Thumbs.db
-
 # Custom
 web
 MysticSession
