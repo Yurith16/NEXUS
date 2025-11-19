@@ -36,7 +36,7 @@ export async function handler(chatUpdate) {
     return;
   }
   if (global.db.data == null) await global.loadDatabase();
-  
+
   /* ------------------------------------------------*/
   try {
     m = smsg(this, m) || m;
@@ -222,7 +222,7 @@ export async function handler(chatUpdate) {
           kerjaduadelapan: 0,
           kerjaduadua: 0,
           kerjaduaempat: 0,
-          kerjaduaenam: 0,
+          kerjaduaseis: 0,
           kerjadualima: 0,
           kerjaduapuluh: 0,
           kerjaduasatu: 0,
@@ -231,8 +231,8 @@ export async function handler(chatUpdate) {
           kerjaduatujuh: 0,
           kerjaempat: 0,
           kerjaempatbelas: 0,
-          kerjaenam: 0,
-          kerjaenambelas: 0,
+          kerjaseis: 0,
+          kerjaseisbelas: 0,
           kerjalima: 0,
           kerjalimabelas: 0,
           kerjasatu: 0,
@@ -512,10 +512,10 @@ export async function handler(chatUpdate) {
             minerando: false,
             nome: null,
             username: null,
-            id: null, // Id do Jogador
+            id: null, // Id del Jugador
             idioma: 'pt-br',
             casa: {
-              id: null, // id do grupo ou seja do planeta casa
+              id: null, // id del grupo o sea del planeta casa
               planeta: null,
               idpelonome: 'terra',
               colonia: {
@@ -534,7 +534,7 @@ export async function handler(chatUpdate) {
             },
             localizacao: {
               status: false,
-              nomeplaneta: null,  // id do grupo...
+              nomeplaneta: null,  // id del grupo...
               id: null,
               idpelonome: null,
               viajando: false,
@@ -547,7 +547,7 @@ export async function handler(chatUpdate) {
               status: false,
               id: null,
               nome: null,
-              velocidade: null,
+              velocidad: null,
               poder: null,
               valor: null,
             },
@@ -598,7 +598,7 @@ export async function handler(chatUpdate) {
         global.db.data.chats[m.chat] = {};
       }
       if (chat) {
-        
+
       const chats = { // i want to assign dick instead chats
           isBanned: false,
           welcome: true,
@@ -733,18 +733,6 @@ export async function handler(chatUpdate) {
         } catch (e) {
           // if (typeof e === 'string') continue
           console.error(e);
-          /* for (const [jid] of global.reportes_solicitudes.filter(([number]) => number)) {
-            const data = (await conn.onWhatsApp(jid))[0] || {};
-            if (data.exists) {
-              await m.reply(`*[ ⚠️ 𝚁𝙴𝙿𝙾𝚁𝚃𝙴 𝙳𝙴 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙲𝙾𝙽 𝙵𝙰𝙻𝙻𝙾𝚂 ⚠️ ]*\n\n*—◉ 𝙿𝙻𝚄𝙶𝙸𝙽:* ${name}\n*—◉ 𝚄𝚂𝚄𝙰𝚁𝙸𝙾:* ${m.sender}\n*—◉ 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:* ${m.text}\n\n*—◉ 𝙴𝚁𝚁𝙾𝚁:*\n\`\`\`${format(e)}\`\`\`\n\n*[❗] 𝚁𝙴𝙿𝙾𝚁𝚃𝙴𝙻𝙾 𝙰𝙻 𝙲𝚁𝙴𝙰𝙳𝙾𝚁 𝙳𝙴𝙻 𝙱𝙾𝚃 𝙿𝙰𝚁𝙰 𝙳𝙰𝚁𝙻𝙴 𝚄𝙽𝙰 𝚂𝙾𝙻𝚄𝙲𝙸𝙾𝙽, 𝙿𝚄𝙴𝙳𝙴 𝚄𝚂𝙰𝚁 𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 #reporte*`.trim(), data.jid);
-            }
-          }*/
-          const md5c = fs.readFileSync('./plugins/' + m.plugin);
-          /*fetch('https://themysticbot.cloud:2083/error', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ number: conn.user.jid, plugin: m.plugin, command: `${m.text}`, reason: format(e), md5: mddd5(md5c) }),
-          });*/
         }
       }
       if (!opts['restrict']) {
@@ -826,7 +814,7 @@ export async function handler(chatUpdate) {
           if (!['owner-unbanchat.js', 'info-creator.js'].includes(name) && chat && chat?.isBanned && !isROwner) return; // Except this
           if (name != 'owner-unbanchat.js' && name != 'owner-exec.js' && name != 'owner-exec2.js' && chat?.isBanned && !isROwner) return; // Except this
           //if ((name != 'owner-unbanchat.js' || name != 'owner-exec.js' || name != 'owner-exec2.js') && chat?.isBanned && !isROwner) return; // Except this
-                    
+
           if (m.text && user.banned && !isROwner) {
             if (typeof user.bannedMessageCount === 'undefined') {
               user.bannedMessageCount = 0;
@@ -834,10 +822,10 @@ export async function handler(chatUpdate) {
 
             if (user.bannedMessageCount < 3) {
               const messageNumber = user.bannedMessageCount + 1;
-              const messageText = `${tradutor.texto1[0]}
-${tradutor.texto1[1]} ${messageNumber}/3
- ${user.bannedReason ? `${tradutor.texto1[2]} ${user.bannedReason}` : `${tradutor.texto1[3]}`}
- ${tradutor.texto1[4]}`.trim();
+              const messageText = `*${tradutor.texto1[0]}*
+*${tradutor.texto1[1]}* ${messageNumber}/3
+ ${user.bannedReason ? `*${tradutor.texto1[2]}* ${user.bannedReason}` : `*${tradutor.texto1[3]}*`}
+ *${tradutor.texto1[4]}*`.trim();
               m.reply(messageText);
               user.bannedMessageCount++;
             } else if (user.bannedMessageCount === 3) {
@@ -852,7 +840,7 @@ ${tradutor.texto1[1]} ${messageNumber}/3
             if (user.commandCount === 2) {
               const remainingTime = Math.ceil((user.lastCommandTime + 5000 - Date.now()) / 1000);
               if (remainingTime > 0) {
-                const messageText = `*[ ℹ️ ] Espera* _${remainingTime} segundos_ *antes de utilizar otro comando.*`;
+                const messageText = `*[ ⚡ ] Espera* _${remainingTime} segundos_ *antes de utilizar otro comando.*`;
                 m.reply(messageText);
                 return;
               } else {
@@ -912,17 +900,17 @@ ${tradutor.texto1[1]} ${messageNumber}/3
         m.isCommand = true;
         const xp = 'exp' in plugin ? parseInt(plugin.exp) : 17; // XP Earning per command
         if (xp > 200) {
-          m.reply('Ngecit -_-');
+          m.reply('*🚫 Detección de anomalía en el núcleo*');
         } // Hehehe
         else {
           m.exp += xp;
         }
         if (!isPrems && plugin.limit && global.db.data.users[m.sender].limit < plugin.limit * 1) {
-          mconn.conn.reply(m.chat, `${tradutor.texto2} _${usedPrefix}buyall_`, m);
+          mconn.conn.reply(m.chat, `*${tradutor.texto2}* _${usedPrefix}buyall_`, m);
           continue;
         }
         if (plugin.level > _user.level) {
-          mconn.conn.reply(m.chat, `${tradutor.texto3[0]} ${plugin.level} ${tradutor.texto3[1]} ${_user.level}, ${tradutor.texto3[2]} ${usedPrefix}lvl ${tradutor.texto3[3]}`, m);
+          mconn.conn.reply(m.chat, `*${tradutor.texto3[0]}* ${plugin.level} *${tradutor.texto3[1]}* ${_user.level}, *${tradutor.texto3[2]}* ${usedPrefix}lvl *${tradutor.texto3[3]}*`, m);
           continue;
         }
         const chatPrim = global.db.data.chats[m.chat] || {};
@@ -936,7 +924,7 @@ ${tradutor.texto1[1]} ${messageNumber}/3
             const primaryNumber = normalizeJid(chatPrim.setPrimaryBot) + '@s.whatsapp.net';
             const currentBotNumber = normalizeJid(mconn.conn.user.jid) + '@s.whatsapp.net';
             if (!isActiveBot(chatPrim.setPrimaryBot)) {
-              console.log(`⚠ Bot primario ${primaryNumber} no está activo - Liberando chat`);
+              console.log(`*⚠️ Bot primario ${primaryNumber} no está activo - Liberando chat*`);
               delete chatPrim.setPrimaryBot;
               global.db.data.chats[m.chat] = chatPrim
             }
@@ -981,24 +969,8 @@ ${tradutor.texto1[1]} ${messageNumber}/3
               text = text.replace(new RegExp(key, 'g'), '#HIDDEN#');
             }
             if (e.name) {
-              /* for (const [jid] of global.reportes_solicitudes.filter(([number]) => number)) {
-                const data = (await conn.onWhatsApp(jid))[0] || {};
-                if (data.exists) {
-                  await m.reply(`*[ ⚠️ 𝚁𝙴𝙿𝙾𝚁𝚃𝙴 𝙳𝙴 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 𝙲𝙾𝙽 𝙵𝙰𝙻𝙻𝙾𝚂 ⚠️ ]*\n\n*—◉ 𝙿𝙻𝚄𝙶𝙸𝙽:* ${m.plugin}\n*—◉ 𝚄𝚂𝚄𝙰𝚁𝙸𝙾:* ${m.sender}\n*—◉ 𝙲𝙾𝙼𝙰𝙽𝙳𝙾:* ${usedPrefix}${command} ${args.join(' ')}\n\n\`\`\`${text}\`\`\`\n\n*[❗] 𝚁𝙴𝙿𝙾𝚁𝚃𝙴𝙻𝙾 𝙰𝙻 𝙲𝚁𝙴𝙰𝙳𝙾𝚁 𝙳𝙴𝙻 𝙱𝙾𝚃 𝙿𝙰𝚁𝙰 𝙳𝙰𝚁𝙻𝙴 𝚄𝙽𝙰 𝚂𝙾𝙻𝚄𝙲𝙸𝙾𝙽, 𝙿𝚄𝙴𝙳𝙴 𝚄𝚂𝙰𝚁 𝙴𝙻 𝙲𝙾𝙼𝙰𝙽𝙳𝙾 #reporte*`.trim(), data.jid);
-                }
-              }*/
-              const md5c = fs.readFileSync('./plugins/' + m.plugin);
-              /*fetch('https://themysticbot.cloud:2083/error', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ number: conn.user.jid, plugin: m.plugin, command: `${usedPrefix}${command} ${args.join(' ')}`, reason: text, md5: mddd5(md5c) }),
-              }).then((res) => res.json()).then((json) => {
-                console.log(json);
-              }).catch((err) => {
-                console.error(err);
-              });*/
+              await m.reply(text);
             }
-            await m.reply(text);
           }
         } finally {
           // m.reply(util.format(_user))
@@ -1010,7 +982,7 @@ ${tradutor.texto1[1]} ${messageNumber}/3
             }
           }
           if (m.limit) {
-            m.reply(`${tradutor.texto4[0]} ` + +m.limit + ` ${tradutor.texto4[1]}`);
+            m.reply(`*${tradutor.texto4[0]}* ` + +m.limit + ` *${tradutor.texto4[1]}*`);
           }
         }
         break;
@@ -1106,13 +1078,13 @@ export async function participantsUpdate({ id, participants, action }) {
            const userPrefix = antiArab.some((prefix) => user.startsWith(prefix));
            const botTt2 = groupMetadata?.participants?.find((u) => m?.conn?.decodeJid(u.id) == m?.conn?.user?.jid) || {};
            const isBotAdminNn = botTt2?.admin === 'admin' || false;
-           text = (action === 'add' ? (chat.sWelcome || tradutor.texto1 || conn.welcome || 'Welcome, @user!').replace('@subject', await m?.conn?.getName(id)).replace('@desc', groupMetadata?.desc?.toString() || '*𝚂𝙸𝙽 𝙳𝙴𝚂𝙲𝚁𝙸𝙿𝙲𝙸𝙾𝙽*').replace('@user', '@' + user.split('@')[0]) :
-            (chat.sBye || tradutor.texto2 || conn.bye || 'Bye, @user!')).replace('@user', '@' + user.split('@')[0]);
+           text = (action === 'add' ? (chat.sWelcome || tradutor.texto1 || conn.welcome || '*👋 ¡Bienvenido/a!* @user').replace('@subject', await m?.conn?.getName(id)).replace('@desc', groupMetadata?.desc?.toString() || '*SIN DESCRIPCIÓN*').replace('@user', '@' + user.split('@')[0]) :
+            (chat.sBye || tradutor.texto2 || conn.bye || '*👋 ¡Hasta luego!* @user')).replace('@user', '@' + user.split('@')[0]);
             if (userPrefix && chat.antiArab && botTt.restrict && isBotAdminNn && action === 'add') {
            const responseb = await m.conn.groupParticipantsUpdate(id, [user], 'remove');
             if (responseb[0].status === '404') return;
            const fkontak2 = { 'key': { 'participants': '0@s.whatsapp.net', 'remoteJid': 'status@broadcast', 'fromMe': false, 'id': 'Halo' }, 'message': { 'contactMessage': { 'vcard': `BEGIN:VCARD\nVERSION:3.0\nN:Sy;Bot;;;\nFN:y\nitem1.TEL;waid=${user.split('@')[0]}:${user.split('@')[0]}\nitem1.X-ABLabel:Ponsel\nEND:VCARD` } }, 'participant': '0@s.whatsapp.net' };
-           await m?.conn?.sendMessage(id, { text: `*[❗] @${user.split('@')[0]} ᴇɴ ᴇsᴛᴇ ɢʀᴜᴘᴏ ɴᴏ sᴇ ᴘᴇʀᴍɪᴛᴇɴ ɴᴜᴍᴇʀᴏs ᴀʀᴀʙᴇs ᴏ ʀᴀʀᴏs, ᴘᴏʀ ʟᴏ ϙᴜᴇ sᴇ ᴛᴇ sᴀᴄᴀʀᴀ ᴅᴇʟ ɢʀᴜᴘᴏ*`, mentions: [user] }, { quoted: fkontak2 });
+           await m?.conn?.sendMessage(id, { text: `*[❗] @${user.split('@')[0]} en este grupo no se permiten números árabes o raros, por lo que se te sacará del grupo*`, mentions: [user] }, { quoted: fkontak2 });
            return;
             }
             await m?.conn?.sendFile(id, apii.data, 'pp.jpg', text, null, false, { mentions: [user] });
@@ -1125,12 +1097,12 @@ export async function participantsUpdate({ id, participants, action }) {
     case 'promote':
     case 'daradmin':
     case 'darpoder':
-      text = (chat.sPromote || tradutor.texto3 || conn?.spromote || '@user ```is now Admin```');
+      text = (chat.sPromote || tradutor.texto3 || conn?.spromote || '*⚡ @user ascendido a administrador*');
     case 'demote':
     case 'quitarpoder':
     case 'quitaradmin':
       if (!text) {
-        text = (chat?.sDemote || tradutor.texto4 || conn?.sdemote || '@user ```is no longer Admin```');
+        text = (chat?.sDemote || tradutor.texto4 || conn?.sdemote || '*⚡ @user degradado de administrador*');
       }
       text = text.replace('@user', '@' + participants[0].split('@')[0]);
       if (chat.detect && !chat?.isBanned) {
@@ -1161,10 +1133,10 @@ export async function groupsUpdate(groupsUpdate) {
     const chats = global.db.data.chats[id]; 
     let text = '';
     if (!chats?.detect) continue;
-    if (groupUpdate?.desc) text = (chats?.sDesc || tradutor.texto5 || conn?.sDesc || '```Description has been changed to```\n@desc').replace('@desc', groupUpdate.desc);
-    if (groupUpdate?.subject) text = (chats?.sSubject || tradutor.texto6 || conn?.sSubject || '```Subject has been changed to```\n@subject').replace('@subject', groupUpdate.subject);
-    if (groupUpdate?.icon) text = (chats?.sIcon || tradutor.texto7 || conn?.sIcon || '```Icon has been changed to```').replace('@icon', groupUpdate.icon);
-    if (groupUpdate?.revoke) text = (chats?.sRevoke || tradutor.texto8 || conn?.sRevoke || '```Group link has been changed to```\n@revoke').replace('@revoke', groupUpdate.revoke);
+    if (groupUpdate?.desc) text = (chats?.sDesc || tradutor.texto5 || conn?.sDesc || '*📝 Descripción actualizada*\n@desc').replace('@desc', groupUpdate.desc);
+    if (groupUpdate?.subject) text = (chats?.sSubject || tradutor.texto6 || conn?.sSubject || '*🏷️ Nombre del grupo actualizado*\n@subject').replace('@subject', groupUpdate.subject);
+    if (groupUpdate?.icon) text = (chats?.sIcon || tradutor.texto7 || conn?.sIcon || '*🖼️ Icono del grupo actualizado*').replace('@icon', groupUpdate.icon);
+    if (groupUpdate?.revoke) text = (chats?.sRevoke || tradutor.texto8 || conn?.sRevoke || '*🔗 Enlace del grupo actualizado*\n@revoke').replace('@revoke', groupUpdate.revoke);
     if (!text) continue;
     await mconn?.conn?.sendMessage(id, { text, mentions: mconn?.conn?.parseMention(text) });
   }
@@ -1176,11 +1148,9 @@ export async function callUpdate(callUpdate) {
   for (const nk of callUpdate) {
     if (nk.isGroup == false) {
       if (nk.status == 'offer') {
-        const callmsg = await mconn?.conn?.reply(nk.from, `Hola *@${nk.from.split('@')[0]}*, las ${nk.isVideo ? 'videollamadas' : 'llamadas'} no están permitidas, serás bloqueado.\n-\nSi accidentalmente llamaste póngase en contacto con mi creador para que te desbloquee!`, false, { mentions: [nk.from] });
-        // let data = global.owner.filter(([id, isCreator]) => id && isCreator)
-        // await this.sendContact(nk.from, data.map(([id, name]) => [id, name]), false, { quoted: callmsg })
-        const vcard = `BEGIN:VCARD\nVERSION:3.0\nN:;𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑;;;\nFN:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nORG:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nTITLE:\nitem1.TEL;waid=5219992095479:+521 999 209 5479\nitem1.X-ABLabel:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nX-WA-BIZ-DESCRIPTION:[❗] ᴄᴏɴᴛᴀᴄᴛᴀ ᴀ ᴇsᴛᴇ ɴᴜᴍ ᴘᴀʀᴀ ᴄᴏsᴀs ɪᴍᴘᴏʀᴛᴀɴᴛᴇs.\nX-WA-BIZ-NAME:𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑\nEND:VCARD`;
-        await mconn.conn.sendMessage(nk.from, { contacts: { displayName: '𝐁𝐫𝐮𝐧𝐨 𝐒𝐨𝐛𝐫𝐢𝐧𝐨 👑', contacts: [{ vcard }] } }, { quoted: callmsg });
+        const callmsg = await mconn?.conn?.reply(nk.from, `*Hola @${nk.from.split('@')[0]}, las ${nk.isVideo ? 'videollamadas' : 'llamadas'} no están permitidas, serás bloqueado.*\n\n*Si accidentalmente llamaste, contacta al desarrollador.*`, false, { mentions: [nk.from] });
+        const vcard = `BEGIN:VCARD\nVERSION:3.0\nN:;Hernandez;;;\nFN:Hernandez\nORG:Hernandez\nTITLE:\nitem1.TEL;waid=50496926150:+504 9692 6150\nitem1.X-ABLabel:Hernandez\nX-WA-BIZ-DESCRIPTION:[❗] Contacta este número para asuntos importantes.\nX-WA-BIZ-NAME:Hernandez\nEND:VCARD`;
+        await mconn.conn.sendMessage(nk.from, { contacts: { displayName: 'Hernandez', contacts: [{ vcard }] } }, { quoted: callmsg });
         await mconn.conn.updateBlockStatus(nk.from, 'block');
       }
     }
@@ -1205,12 +1175,13 @@ export async function deleteUpdate(message) {
     if (!chat?.antidelete) return
     if (!msg) return
     if (!msg?.isGroup) return
-    const antideleteMessage = `${tradutor.texto1[0]}
-${tradutor.texto1[1]} @${participant.split`@`[0]}
-${tradutor.texto1[2]} ${time}
-${tradutor.texto1[3]} ${date}\n
-${tradutor.texto1[4]}
-${tradutor.texto1[5]}`.trim();
+    const antideleteMessage = `*${tradutor.texto1[0]}*
+*${tradutor.texto1[1]}* @${participant.split`@`[0]}
+*${tradutor.texto1[2]}* ${time}
+*${tradutor.texto1[3]}* ${date}
+
+*${tradutor.texto1[4]}*
+*${tradutor.texto1[5]}*`.trim();
     await mconn.conn.sendMessage(msg.chat, { text: antideleteMessage, mentions: [participant] }, { quoted: msg })
     mconn.conn.copyNForward(msg.chat, msg).catch(e => console.log(e, msg))
   } catch (e) {
@@ -1262,7 +1233,7 @@ global.dfail = (type, m, conn) => {
 const file = global.__filename(import.meta.url, true);
 watchFile(file, async () => {
   unwatchFile(file);
-  console.log(chalk.redBright('Update \'handler.js\''));
+  console.log(chalk.redBright('*🔄 Actualizando handler.js*'));
   if (global.reloadHandler) console.log(await global.reloadHandler());
 
   if (global.conns && global.conns.length > 0) {

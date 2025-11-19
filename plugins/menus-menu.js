@@ -2,27 +2,24 @@ import { promises as fs } from 'fs';
 import { join } from 'path';
 
 const handler = async (m, { conn, usedPrefix, __dirname, isPrems }) => {
-        const idioma = global.db.data.users[m.sender]?.language || global.defaultLenguaje || 'es';
-        const _translate = JSON.parse(await fs.readFile(`./src/languages/${idioma}/${m.plugin}.json`));
-        const tradutor = _translate.plugins.menu;
+    const idioma = global.db.data.users[m.sender]?.language || global.defaultLenguaje || 'es';
+    const _translate = JSON.parse(await fs.readFile(`./src/languages/${idioma}/${m.plugin}.json`));
+    const tradutor = _translate.plugins.menu;
 
     try {
         const username = '@' + m.sender.split('@s.whatsapp.net')[0];
         if (usedPrefix == 'a' || usedPrefix == 'A') return;
 
-        const more = String.fromCharCode(8206);
-        const readMore = more.repeat(4001); 
-            
         const d = new Date(new Date().getTime() + 3600000);
-        
+
         const localeMap = {
             'es': 'es-ES',
             'en': 'en-US',
             'ar': 'ar-SA'
         };
-        
+
         const locale = localeMap[idioma.toLowerCase()] || 'es-ES';
-        
+
         let week, date;
         try {
             week = d.toLocaleDateString(locale, { weekday: 'long' });
@@ -31,343 +28,267 @@ const handler = async (m, { conn, usedPrefix, __dirname, isPrems }) => {
             week = d.toLocaleDateString('es-ES', { weekday: 'long' });
             date = d.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
         }
-        
+
         const _uptime = process.uptime() * 1000;
         const uptime = clockString(_uptime);
         const rtotalreg = Object.values(global.db.data.users).filter(user => user.registered == true).length;
         const rtotal = Object.keys(global.db.data.users).length || '0';
 
-        const tags = tradutor.tags || {};
-        
-        const extrasCommands = {
-            'info': [
-                `${usedPrefix}menuaudios`,
-                `${usedPrefix}menuanimes`,
-                `${usedPrefix}labiblia`,
-                `${usedPrefix}lang`,
-                `${usedPrefix}infobot`,
-                `${usedPrefix}script`,
-                `${usedPrefix}estado`,
-                `${usedPrefix}join <wagp_url>`,
-                `${usedPrefix}fixmsgespera`,
-                `bot (sin prefijo)`
-            ],
-            'jadibot': [
-                `${usedPrefix}serbot --code`
-            ],
-            'xp': [
-                `${usedPrefix}cofre`,
-                `${usedPrefix}balance`,
-                `${usedPrefix}claim`,
-                `${usedPrefix}lb`,
-                `${usedPrefix}myns`,
-                `${usedPrefix}perfil`,
-                `${usedPrefix}crime`
-            ],
-            'game': [
-                `${usedPrefix}mates <noob/easy/medium/hard/extreme/impossible/impossible2>`,
-                `${usedPrefix}ppt <papel/tijera/piedra>`,
-                `${usedPrefix}suitpvp <@tag>`,
-                `${usedPrefix}ttt`,
-                `${usedPrefix}delttt`,
-                `${usedPrefix}akinator`,
-                `${usedPrefix}wordfind`,
-                `${usedPrefix}cancion`,
-                `${usedPrefix}pista`,
-                `${usedPrefix}glx (RPG Mundo)`,
-                `${usedPrefix}doxear <nombre / @tag>`
-            ],
-            'group': [
-                `${usedPrefix}grouptime <tiempo>`,
-                `${usedPrefix}enable welcome`,
-                `${usedPrefix}disable welcome`,
-                `${usedPrefix}enable modohorny`,
-                `${usedPrefix}disable modohorny`,
-                `${usedPrefix}enable antilink`,
-                `${usedPrefix}disable antilink`,
-                `${usedPrefix}enable antilink2`,
-                `${usedPrefix}disable antilink2`,
-                `${usedPrefix}enable detect`,
-                `${usedPrefix}disable detect`,
-                `${usedPrefix}enable audios`,
-                `${usedPrefix}disable audios`,
-                `${usedPrefix}enable autosticker`,
-                `${usedPrefix}disable autosticker`,
-                `${usedPrefix}enable antiviewonce`,
-                `${usedPrefix}disable antiviewonce`,
-                `${usedPrefix}enable antitoxic`,
-                `${usedPrefix}disable antitoxic`,
-                `${usedPrefix}enable antitraba`,
-                `${usedPrefix}disable antitraba`,
-                `${usedPrefix}enable antiarabes`,
-                `${usedPrefix}disable antiarabes`,
-                `${usedPrefix}enable modoadmin`,
-                `${usedPrefix}disable modoadmin`,
-                `${usedPrefix}enable antidelete`,
-                `${usedPrefix}disable antidelete`
-            ],
-            'downloader': [
-                `${usedPrefix}spotify <txt>`,
-                `${usedPrefix}playdoc <txt>`,
-                `${usedPrefix}ytmp3doc <url>`,
-                `${usedPrefix}ytmp4doc <url>`,
-                `${usedPrefix}facebook <url>`,
-                `${usedPrefix}instagram <url>`,
-                `${usedPrefix}tiktok <url>`,
-                `${usedPrefix}tiktokimg <url>`,
-                `${usedPrefix}pptiktok <usr>`,
-                `${usedPrefix}mediafire <url>`,
-                `${usedPrefix}gitclone <url>`,
-                `${usedPrefix}gdrive <url>`,
-                `${usedPrefix}twitter <url>`,
-                `${usedPrefix}ringtone <txt>`,
-                `${usedPrefix}soundcloud <txt>`,
-                `${usedPrefix}stickerpack <url>`,
-                `${usedPrefix}dapk2 <url>`
-            ],
-            'search': [
-                `${usedPrefix}modapk <txt>`,
-                `${usedPrefix}stickersearch <txt>`,
-                `${usedPrefix}stickersearch2 <txt>`,
-                `${usedPrefix}animeinfo <txt>`,
-                `${usedPrefix}cuevana <text>`,
-                `${usedPrefix}cuevanaInfo <link>`
-            ],
-            'effects': [
-                `${usedPrefix}logos <efecto> <txt>`,
-                `${usedPrefix}logochristmas <txt>`,
-                `${usedPrefix}logocorazon <txt>`,
-                `${usedPrefix}pixelar`
-            ],
-            'img': [
-                `${usedPrefix}wpmontaña`,
-                `${usedPrefix}pubg`,
-                `${usedPrefix}wpgaming`,
-                `${usedPrefix}wpaesthetic`,
-                `${usedPrefix}wpaesthetic2`,
-                `${usedPrefix}wprandom`,
-                `${usedPrefix}wallhp`,
-                `${usedPrefix}wpvehiculo`,
-                `${usedPrefix}wpmoto`,
-                `${usedPrefix}coffee`,
-                `${usedPrefix}pentol`,
-                `${usedPrefix}caricatura`,
-                `${usedPrefix}ciberespacio`,
-                `${usedPrefix}technology`,
-                `${usedPrefix}doraemon`,
-                `${usedPrefix}hacker`,
-                `${usedPrefix}planeta`,
-                `${usedPrefix}randomprofile`
-            ],
-            'tools': [
-                `${usedPrefix}ocr`,
-                `${usedPrefix}inspect <wagc_url>`,
-                `${usedPrefix}chatgpt <txt>`,
-                `${usedPrefix}exploit <txt>`,
-                `${usedPrefix}dall-e <txt>`,
-                `${usedPrefix}spamwa <num|txt|cant>`,
-                `${usedPrefix}readviewonce <img/video>`,
-                `${usedPrefix}clima <país> <ciudad>`,
-                `${usedPrefix}encuesta <txt1|txt2>`,
-                `${usedPrefix}whatmusic <audio>`,
-                `${usedPrefix}readqr <img>`,
-                `${usedPrefix}styletext <txt>`,
-                `${usedPrefix}nowa <num>`,
-                `${usedPrefix}covid <pais>`,
-                `${usedPrefix}horario`,
-                `${usedPrefix}igstalk <usr>`,
-                `${usedPrefix}del <msj>`
-            ],
-            'converter': [
-                `${usedPrefix}toptt <video / audio>`
-            ],
-            'sticker': [
-                `${usedPrefix}scircle <img>`,
-                `${usedPrefix}sremovebg <img>`,
-                `${usedPrefix}semoji <tipo> <emoji>`,
-                `${usedPrefix}attp2 <txt>`,
-                `${usedPrefix}attp3 <txt>`,
-                `${usedPrefix}ttp2 <txt>`,
-                `${usedPrefix}ttp3 <txt>`,
-                `${usedPrefix}ttp4 <txt>`,
-                `${usedPrefix}ttp5 <txt>`,
-                `${usedPrefix}slap <@tag>`,
-                `${usedPrefix}pat <@tag>`,
-                `${usedPrefix}kiss <@tag>`,
-                `${usedPrefix}dado`,
-                `${usedPrefix}stickermarker <efecto> <img>`,
-                `${usedPrefix}stickerfilter <efecto> <img>`
-            ],
-            'owner': [
-                `${usedPrefix}dsowner`,
-                `${usedPrefix}autoadmin`,
-                `${usedPrefix}leavegc`,
-                `${usedPrefix}addowner <@tag / num>`,
-                `${usedPrefix}delowner <@tag / num>`,
-                `${usedPrefix}block <@tag / num>`,
-                `${usedPrefix}unblock <@tag / num>`,
-                `${usedPrefix}enable restrict`,
-                `${usedPrefix}disable restrict`,
-                `${usedPrefix}enable autoread`,
-                `${usedPrefix}disable autoread`,
-                `${usedPrefix}enable public`,
-                `${usedPrefix}disable public`,
-                `${usedPrefix}enable pconly`,
-                `${usedPrefix}disable pconly`,
-                `${usedPrefix}enable gconly`,
-                `${usedPrefix}disable gconly`,
-                `${usedPrefix}enable anticall`,
-                `${usedPrefix}disable anticall`,
-                `${usedPrefix}enable antiprivado`,
-                `${usedPrefix}disable antiprivado`,
-                `${usedPrefix}enable modejadibot`,
-                `${usedPrefix}disable modejadibot`,
-                `${usedPrefix}enable audios_bot`,
-                `${usedPrefix}disable audios_bot`,
-                `${usedPrefix}enable antispam`,
-                `${usedPrefix}disable antispam`,
-                `${usedPrefix}resetuser <@tag>`,
-                `${usedPrefix}banuser <@tag>`,
-                `${usedPrefix}dardiamantes <@tag> <cant>`,
-                `${usedPrefix}añadirxp <@tag> <cant>`,
-                `${usedPrefix}bcbot <txt>`,
-                `${usedPrefix}cleartpm`,
-                `${usedPrefix}banlist`,
-                `${usedPrefix}addprem2 <@tag> <time>`,
-                `${usedPrefix}addprem3 <@tag> <time>`,
-                `${usedPrefix}addprem4 <@tag> <time>`,
-                `${usedPrefix}listcmd`,
-                `${usedPrefix}addcmd <txt>`,
-                `${usedPrefix}delcmd`,
-                `${usedPrefix}msg <txt>`,
-                `${usedPrefix}setppbot <reply to img>`
-            ]
-        };
-
         let user = global.db.data.users[m.sender];
         let exp = user.exp ? user.exp : 0
         let limit = user.limit ? user.limit : 0;
         let level = user.level ? user.level : 0;
-        let role = user.role ? user.role : 'Nuevo';
+        let role = user.role ? user.role : 'Novato';
         let money = user.money ? user.money : 0;
         let joincount = user.joincount ? user.joincount : 0;
 
-        const defaultMenu = {
-            before: (tradutor.menu_header || '')
-                .replace('@username', username)
-                .replace('@author', global.author || 'Desconocido')
-                .replace('@owner', global.owner?.[0]?.[0] || '000000000000')
-                .replace('@week', week)
-                .replace('@date', date)
-                .replace('@uptime', uptime)
-                .replace('@rtotal', rtotal)
-                .replace('@rtotalreg', rtotalreg),
-            
-            user_info: '\n' + (tradutor.user_info || '')
-                .replace('@level', level)
-                .replace('@exp', exp)
-                .replace('@role', role || 'Nuevo')
-                .replace('@limit', limit)
-                .replace('@money', money)
-                .replace('@joincount', joincount)
-                .replace('@premium', user.premiumTime > 0 ? 
-                    (tradutor.premium?.yes || '✅') : 
-                    (isPrems ? (tradutor.premium?.yes || '✅') : (tradutor.premium?.no || '❌'))),
-            
-            header: (tradutor.section_header).replace('@category', '%category'),
-            body: (tradutor.command_item).replace('@cmd', '%cmd').replace('@islimit', '%islimit'),
-            footer: tradutor.section_footer,
-            after: ''
-        };
+        // MENÚ NEXUS - Con TODOS los comandos
+        const menuNexus = `
+*🕸️  N E X U S  🜃*
 
-        let help = Object.values(global.plugins).filter(plugin => !plugin.disabled).map(plugin => {
-            return {
-                help: Array.isArray(plugin.help) ? plugin.help : [plugin.help],
-                tags: Array.isArray(plugin.tags) ? plugin.tags : [plugin.tags],
-                prefix: 'customPrefix' in plugin,
-                limit: plugin.limit,
-                enabled: !plugin.disabled,
-            }
-        });
+*📡 INFORMACIÓN DEL NÚCLEO*
+*🜂 Desarrollador:* Hernandez
+*⚡ Versión:* Nexus v2.0
+*📞 Soporte:* +504 9692-6150
+*⏱️ Activo:* ${uptime}
+*👥 Usuarios:* ${rtotal}
 
-        conn.menu = conn.menu || {};
-        let before = conn.menu.before || defaultMenu.before + '\n' + defaultMenu.user_info;
-        let header = conn.menu.header || defaultMenu.header;
-        let body = conn.menu.body || defaultMenu.body;
-        let footer = conn.menu.footer || defaultMenu.footer;
-        let after = conn.menu.after || defaultMenu.after;
+*👤 USUARIO:* ${username}
+*⚡ ESTADO:* ${user.premiumTime > 0 ? '🜂 PREMIUM' : (isPrems ? '🜂 PREMIUM' : '⛓️ STANDARD')}
 
-        let _text = [
-            before + readMore,    
-            ...Object.keys(tags).map(tag => {
-                let pluginCommands = help.filter(menu => menu.tags && menu.tags.includes(tag) && menu.help).map(menu => {
-                    return menu.help.map(help => {
-                        return body.replace(/%cmd/g, menu.prefix ? help : '%p' + help)
-                            .replace(/%islimit/g, menu.limit ? '⭐' : '')
-                            .trim()
-                    }).join('\n')
-                });
-                
-                let categoryCommands = [...pluginCommands];
-                
-                if (extrasCommands[tag]) {
-                    let existingCommands = new Set();
-                    pluginCommands.forEach(cmdGroup => {
-                        cmdGroup.split('\n').forEach(line => {
-                            let match = line.match(/□\s+(.+)/);
-                            if (match) {
-                                let cmd = match[1].replace(/%p/g, usedPrefix).split(' ')[0];
-                                existingCommands.add(cmd);
-                            }
-                        });
-                    });
-                    
-                    let filteredExtras = extrasCommands[tag].filter(extraCmd => {
-                        let baseCmd = extraCmd.split(' ')[0];
-                        return !existingCommands.has(baseCmd);
-                    });
-                    
-                    if (filteredExtras.length > 0) {
-                        categoryCommands.push(
-                            ...filteredExtras.map(cmd => 
-                                body.replace(/%cmd/g, cmd).replace(/%islimit/g, '').trim()
-                            )
-                        );
-                    }
+*📊 ESTADÍSTICAS:*
+*🜂 Nivel:* ${level} | *⚡ EXP:* ${exp}
+*⛓️ Límites:* ${limit} | *📈 Diamantes:* ${money}
+*🔰 Rango:* ${role} | *🎯 Joins:* ${joincount}
+
+*⛓️━━━━━━━━━━━━━━━━━━⛓️*
+
+*🜂  HERRAMIENTAS PRINCIPALES*
+
+*⚡ Descargas Multimedia*
+• *${usedPrefix}play* - Audio YouTube
+• *${usedPrefix}ytmp4* - Video YouTube  
+• *${usedPrefix}spotify* - Audio Spotify
+• *${usedPrefix}tiktok* - Video TikTok
+• *${usedPrefix}facebook* - Video Facebook
+• *${usedPrefix}instagram* - Descarga IG
+• *${usedPrefix}mediafire* - MediaFire
+• *${usedPrefix}gitclone* - Git Clone
+• *${usedPrefix}gdrive* - Google Drive
+• *${usedPrefix}twitter* - Video Twitter
+• *${usedPrefix}ringtone* - Tonos llamada
+• *${usedPrefix}soundcloud* - SoundCloud
+• *${usedPrefix}stickerpack* - Pack stickers
+• *${usedPrefix}dapk2* - Descarga APK
+
+*📡 Búsquedas y Info*
+• *${usedPrefix}modapk* - Buscar APKs
+• *${usedPrefix}stickersearch* - Buscar stickers
+• *${usedPrefix}stickersearch2* - Buscar stickers 2
+• *${usedPrefix}animeinfo* - Info anime
+• *${usedPrefix}cuevana* - Buscar películas
+• *${usedPrefix}cuevanaInfo* - Info película
+
+*🎨 Efectos y Logos*
+• *${usedPrefix}logos* - Logos personalizados
+• *${usedPrefix}logochristmas* - Logo navideño
+• *${usedPrefix}logocorazon* - Logo corazón
+• *${usedPrefix}pixelar* - Efecto pixelar
+
+*⛓️━━━━━━━━━━━━━━━━━━⛓️*
+
+*🜃  SISTEMA AVANZADO*
+
+*🎮 Juegos y Entretenimiento*
+• *${usedPrefix}mates* - Problemas matemáticos
+• *${usedPrefix}ppt* - Piedra, papel, tijera
+• *${usedPrefix}suitpvp* - Duelo PvP
+• *${usedPrefix}ttt* - Tres en raya
+• *${usedPrefix}delttt* - Eliminar TTT
+• *${usedPrefix}akinator* - Juego adivinanza
+• *${usedPrefix}wordfind* - Buscar palabras
+• *${usedPrefix}cancion* - Adivinar canción
+• *${usedPrefix}pista* - Pistas juego
+• *${usedPrefix}glx* - RPG Mundo Galaxy
+• *${usedPrefix}doxear* - Info usuario
+
+*🔧 Utilidades y Herramientas*
+• *${usedPrefix}ocr* - Leer texto imágenes
+• *${usedPrefix}inspect* - Inspeccionar grupo
+• *${usedPrefix}chatgpt* - IA conversacional
+• *${usedPrefix}exploit* - Buscar exploits
+• *${usedPrefix}dall-e* - Generar imágenes
+• *${usedPrefix}spamwa* - Spam WhatsApp
+• *${usedPrefix}readviewonce* - Ver viewonce
+• *${usedPrefix}clima* - Clima actual
+• *${usedPrefix}encuesta* - Crear encuesta
+• *${usedPrefix}whatmusic* - Identificar música
+• *${usedPrefix}readqr* - Leer QR
+• *${usedPrefix}styletext* - Texto con estilo
+• *${usedPrefix}nowa* - Número WhatsApp
+• *${usedPrefix}covid* - Info COVID
+• *${usedPrefix}horario* - Horario actual
+• *${usedPrefix}igstalk* - Stalkear IG
+• *${usedPrefix}del* - Eliminar mensaje
+
+*📊 RPG Sistema*
+• *${usedPrefix}cofre* - Reclamar cofre
+• *${usedPrefix}balance* - Ver balance
+• *${usedPrefix}claim* - Reclamar recompensa
+• *${usedPrefix}lb* - Leaderboard
+• *${usedPrefix}myns* - Mi nombre serial
+• *${usedPrefix}perfil* - Ver perfil
+• *${usedPrefix}crime* - Cometer crimen
+
+*⛓️━━━━━━━━━━━━━━━━━━⛓️*
+
+*⚡  ADMINISTRACIÓN*
+
+*👥 Configuración de Grupo*
+• *${usedPrefix}grouptime* - Tiempo grupo
+• *${usedPrefix}enable welcome* - Bienvenidas
+• *${usedPrefix}disable welcome* - Desactivar
+• *${usedPrefix}enable modohorny* - Modo horny
+• *${usedPrefix}enable antilink* - Anti-enlaces
+• *${usedPrefix}enable antilink2* - Anti-enlaces 2
+• *${usedPrefix}enable detect* - Detecciones
+• *${usedPrefix}enable audios* - Audios
+• *${usedPrefix}enable autosticker* - Auto-sticker
+• *${usedPrefix}enable antiviewonce* - Anti-viewonce
+• *${usedPrefix}enable antitoxic* - Anti-tóxico
+• *${usedPrefix}enable antitraba* - Anti-traba
+• *${usedPrefix}enable antiarabes* - Anti-árabes
+• *${usedPrefix}enable modoadmin* - Modo admin
+• *${usedPrefix}enable antidelete* - Anti-delete
+
+*🛡️ Comandos de Propietario*
+• *${usedPrefix}dsowner* - Dueño sub-bot
+• *${usedPrefix}autoadmin* - Auto-admin
+• *${usedPrefix}leavegc* - Salir grupo
+• *${usedPrefix}addowner* - Agregar owner
+• *${usedPrefix}delowner* - Eliminar owner
+• *${usedPrefix}block* - Bloquear usuario
+• *${usedPrefix}unblock* - Desbloquear
+• *${usedPrefix}enable restrict* - Restricción
+• *${usedPrefix}enable autoread* - Auto-leer
+• *${usedPrefix}enable public* - Modo público
+• *${usedPrefix}enable pconly* - Solo privado
+• *${usedPrefix}enable gconly* - Solo grupos
+• *${usedPrefix}enable anticall* - Anti-llamadas
+• *${usedPrefix}enable antiprivado* - Anti-privado
+• *${usedPrefix}enable modejadibot* - Modo jadibot
+• *${usedPrefix}enable audios_bot* - Audios bot
+• *${usedPrefix}enable antispam* - Anti-spam
+• *${usedPrefix}resetuser* - Resetear usuario
+• *${usedPrefix}banuser* - Banear usuario
+• *${usedPrefix}dardiamantes* - Dar diamantes
+• *${usedPrefix}añadirxp* - Agregar XP
+• *${usedPrefix}bcbot* - Broadcast global
+• *${usedPrefix}cleartpm* - Limpiar temporal
+• *${usedPrefix}banlist* - Lista baneados
+• *${usedPrefix}addprem2* - Agregar premium
+• *${usedPrefix}addprem3* - Agregar premium 3
+• *${usedPrefix}addprem4* - Agregar premium 4
+• *${usedPrefix}listcmd* - Listar comandos
+• *${usedPrefix}addcmd* - Agregar comando
+• *${usedPrefix}delcmd* - Eliminar comando
+• *${usedPrefix}msg* - Enviar mensaje
+• *${usedPrefix}setppbot* - Cambiar pp bot
+
+*⛓️━━━━━━━━━━━━━━━━━━⛓️*
+
+*🎨 Stickers y Multimedia*
+
+*🖼️ Creación de Stickers*
+• *${usedPrefix}sticker* - Crear sticker
+• *${usedPrefix}scircle* - Sticker circular
+• *${usedPrefix}sremovebg* - Quitar fondo
+• *${usedPrefix}semoji* - Sticker emoji
+• *${usedPrefix}attp2* - Texto animado 2
+• *${usedPrefix}attp3* - Texto animado 3
+• *${usedPrefix}ttp2* - Texto a sticker 2
+• *${usedPrefix}ttp3* - Texto a sticker 3
+• *${usedPrefix}ttp4* - Texto a sticker 4
+• *${usedPrefix}ttp5* - Texto a sticker 5
+• *${usedPrefix}slap* - Sticker bofetada
+• *${usedPrefix}pat* - Sticker palmada
+• *${usedPrefix}kiss* - Sticker beso
+• *${usedPrefix}dado* - Sticker dado
+• *${usedPrefix}stickermarker* - Sticker marker
+• *${usedPrefix}stickerfilter* - Sticker filter
+
+*📱 Wallpapers e Imágenes*
+• *${usedPrefix}wpmontaña* - WP montaña
+• *${usedPrefix}pubg* - WP PUBG
+• *${usedPrefix}wpgaming* - WP gaming
+• *${usedPrefix}wpaesthetic* - WP aesthetic
+• *${usedPrefix}wpaesthetic2* - WP aesthetic 2
+• *${usedPrefix}wprandom* - WP random
+• *${usedPrefix}wallhp* - WP HP
+• *${usedPrefix}wpvehiculo* - WP vehículos
+• *${usedPrefix}wpmoto* - WP motos
+• *${usedPrefix}coffee* - Café
+• *${usedPrefix}pentol* - Pentol
+• *${usedPrefix}caricatura* - Caricatura
+• *${usedPrefix}ciberespacio* - Ciberespacio
+• *${usedPrefix}technology* - Tecnología
+• *${usedPrefix}doraemon* - Doraemon
+• *${usedPrefix}hacker* - Hacker
+• *${usedPrefix}planeta* - Planeta
+• *${usedPrefix}randomprofile* - Perfil random
+
+*⛓️━━━━━━━━━━━━━━━━━━⛓️*
+
+*🔰 COMANDOS ADICIONALES*
+
+*ℹ️ Información y Utilidades*
+• *${usedPrefix}menuaudios* - Menú audios
+• *${usedPrefix}menuanimes* - Menú animes
+• *${usedPrefix}labiblia* - La biblia
+• *${usedPrefix}lang* - Cambiar idioma
+• *${usedPrefix}infobot* - Info del bot
+• *${usedPrefix}script* - Script del bot
+• *${usedPrefix}estado* - Estado del bot
+• *${usedPrefix}join* - Unirse a grupo
+• *${usedPrefix}fixmsgespera* - Fix mensajes
+• *bot* - Activar sin prefijo
+
+*🤖 Sistema JadiBot*
+• *${usedPrefix}serbot --code* - Crear sub-bot
+
+*🔄 Conversores*
+• *${usedPrefix}toptt* - A audio WhatsApp
+
+*💡 Usa ${usedPrefix}comando para más info*
+*🕸️ NEXUS - Sistema Privado de Herramientas*
+`.trim();
+
+        // Enviar menú como texto puro
+        const sentMessage = await conn.sendMessage(m.chat, { 
+            text: menuNexus, 
+            mentions: [m.sender] 
+        }, { quoted: m });
+
+        // Reaccionar con telaraña al mensaje del menú
+        try {
+            await conn.sendMessage(m.chat, {
+                react: {
+                    text: '🕸️',
+                    key: sentMessage.key
                 }
-                
-                return categoryCommands.length > 0 
-                    ? header.replace(/%category/g, tags[tag] || tag.toUpperCase()) + '\n' + categoryCommands.join('\n') + '\n' + footer
-                    : '';
-            }).filter(section => section !== ''),
-            after
-        ].join('\n');
+            });
+        } catch (reactError) {
+            console.log('*❌ Error en reacción:*', reactError.message);
+        }
 
-        let text = typeof conn.menu == 'string' ? conn.menu : typeof conn.menu == 'object' ? _text : '';
-        let replace = {
-            '%': '%',
-            p: usedPrefix,
-            taguser: '@' + m.sender.split("@s.whatsapp.net")[0],
-            me: conn.getName(conn.user.jid),
-            name: await conn.getName(m.sender)
-        };
-        
-        text = text.replace(new RegExp(`%(${Object.keys(replace).sort((a, b) => b.length - a.length).join`|`})`, 'g'), (_, name) => '' + replace[name]);
-
-        let pp;
-        const imageMap = {'es': global.imagen1, 'en': global.imagen4, 'ar': global.imagen5 };
-        
-        pp = imageMap[idioma.toLowerCase()] || global.imagen1;
-
-        await conn.sendMessage(m.chat, { image: pp , caption: text.trim(), mentions: [m.sender] }, { quoted: m });
     } catch (e) {
-        await m.reply(`${tradutor?.error_message} ${e.message}`);
+        await m.reply(`*❌ ERROR EN EL NÚCLEO*\n*⚡ ${e.message}*`);
     }
 };
 
 handler.help = ['menu'];
 handler.tags = ['info'];
-handler.command = /^(menu|help|comandos|commands|cmd|cmds)$/i;
+handler.command = /^(menu|help|comandos|commands|cmd|cmds|nexus)$/i;
 export default handler;
 
 function clockString(ms) {
